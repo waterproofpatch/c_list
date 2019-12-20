@@ -1,3 +1,7 @@
+/**
+ * @author waterproofpatch
+ * @brief Implementation for the list
+ */
 #include <stdlib.h>
 #include "list.h"
 

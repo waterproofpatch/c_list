@@ -1,3 +1,7 @@
+/**
+ * @author waterproofpatch
+ * @brief example implementation
+ */
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>

@@ -1,3 +1,7 @@
+/**
+ * @author waterproofpatch
+ * @brief example header
+ */
 #ifndef EXAMPLE_1_
 #define EXAMPLE_1_
 

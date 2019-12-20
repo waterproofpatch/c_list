@@ -41,17 +41,16 @@ void item_processor(void* item, void* context)
 ```
 
 ## Prerequisites
-Only the standard C library is required to build the main executable that uses the list.
 
-For documentation:
 * doxygen
-
-For building and running the tests:
+* ruby
 * ceedling
+* gcovr
 
 ## Build
 
 ### Documentation
+
 ```bash
 make doc
 ```
@@ -77,6 +76,7 @@ make run
 ## Run Tests
 
 This assumes you have ruby/ceedling
+
 ```bash
 make test
 ```

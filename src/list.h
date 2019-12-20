@@ -1,8 +1,10 @@
 /**
-  @brief Public interface for the linked list implementation.
+ *  @author waterproofpatch
+ *  @brief Public interface for the linked list implementation.
  */
 #ifndef LIST_H
 #define LIST_H
+
 #include <stddef.h>
 
 typedef struct _list_node_t
