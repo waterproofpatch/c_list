@@ -2,6 +2,8 @@ SRC_DIR=src
 BIN_DIR=bin
 DOC_DIR=doc
 EXEC_NAME=main
+BUILD_DIR=build
+DOC_BUILD=doc
 
 .PHONY: test
 	test
@@ -30,4 +32,6 @@ test: setup
 
 clean:
 	@rm -rf $(BIN_DIR)/
+	@rm -rf $(DOC_DIR)/
+	@rm -rf $(BUILD_DIR)/
 	@rm -rf $(DOC_DIR)/
