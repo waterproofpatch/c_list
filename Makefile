@@ -1,16 +1,19 @@
 SRC_DIR=src
+LIB_DIR=$(SRC_DIR)/lib
 BIN_DIR=bin
 DOC_DIR=doc
 EXEC_NAME=main
 BUILD_DIR=build
 DOC_BUILD=doc
 
+INCLUDES=-I$(LIB_DIR)
+
 .PHONY: test
 
 .PHONY: doc
 
 all: setup doc
-	gcc -g $(SRC_DIR)/*.c -o $(BIN_DIR)/$(EXEC_NAME)
+	gcc -g $(INCLUDES) $(SRC_DIR)/*.c $(LIB_DIR)/*.c -o $(BIN_DIR)/$(EXEC_NAME)
 
 doc:
 	@doxygen Doxyfile 
