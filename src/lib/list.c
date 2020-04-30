@@ -119,7 +119,7 @@ void list_foreach(list_t *list,
                   void (*process_func)(void *, void *),
                   void *context)
 {
-    if (list == NULL || process_func == NULL || context == NULL)
+    if (list == NULL || process_func == NULL)
     {
         return;
     }

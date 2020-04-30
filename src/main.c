@@ -141,10 +141,6 @@ int main(int argc, char **argv)
     assert(c != NULL);
     assert(d != NULL);
 
-    list_foreach(list, print_list, NULL);
-    list_destroy(list);
-
-    list = list_init(malloc, free);
     assert(list != NULL);
 
     assert(list_count(list) == 0);
