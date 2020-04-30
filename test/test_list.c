@@ -91,18 +91,6 @@ void testListInitNullFree()
     TEST_ASSERT_NULL(list_init(wrap_malloc, NULL));
 }
 
-void testListRemoveHead()
-{
-    wrap_malloc_StubWithCallback(wrap_malloc_stub);
-    wrap_free_StubWithCallback(wrap_free_stub);
-
-    list_t *list   = list_init(wrap_malloc, wrap_free);
-    int     elem_1 = 1;
-    TEST_ASSERT_EQUAL(1, list_add(list, &elem_1));
-    TEST_ASSERT_EQUAL(1, list_remove(list, &elem_1));
-    list_destroy(list);
-}
-
 void testListCount()
 {
     wrap_malloc_StubWithCallback(wrap_malloc_stub);

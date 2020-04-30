@@ -16,7 +16,7 @@ void tearDown()
 {
 }
 
-void list_free(void* ptr)
+void list_free(void *ptr)
 {
     TEST_ASSERT_NOT_NULL(ptr);
     free(ptr);
@@ -27,11 +27,11 @@ void list_free(void* ptr)
  * */
 void test_list_remove_tail()
 {
-    list_t* l        = malloc(sizeof(list_t));
+    list_t *l        = malloc(sizeof(list_t));
     l->head          = malloc(sizeof(list_node_t));
-    l->head->element = (void*)4;
+    l->head->element = (void *)4;
     l->tail          = malloc(sizeof(list_node_t));
-    l->tail->element = (void*)5;
+    l->tail->element = (void *)5;
     l->tail->next    = NULL;
     l->head->next    = l->tail;
     l->count         = 2;
@@ -49,11 +49,11 @@ void test_list_remove_tail()
  * */
 void test_list_remove_head()
 {
-    list_t* l        = malloc(sizeof(list_t));
+    list_t *l        = malloc(sizeof(list_t));
     l->head          = malloc(sizeof(list_node_t));
-    l->head->element = (void*)4;
+    l->head->element = (void *)4;
     l->tail          = malloc(sizeof(list_node_t));
-    l->tail->element = (void*)5;
+    l->tail->element = (void *)5;
     l->tail->next    = NULL;
     l->head->next    = l->tail;
     l->count         = 2;
