@@ -4,7 +4,7 @@ Simple linked list implementation in C (using only the C standard library).
 
 ## Example Usage
 
-See `src/example1.c`
+See `src/main.c`
 
 ## Prerequisites
 

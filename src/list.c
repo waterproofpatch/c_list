@@ -3,10 +3,16 @@
  * @brief Implementation for the list
  */
 #include <stdlib.h>
+
+/* This file */
 #include "list.h"
 
 list_t *list_init(void *(*list_malloc)(size_t), void (*list_free)(void *))
 {
+    if (list_malloc == NULL || list_free == NULL)
+    {
+        return NULL;
+    }
 
     list_t *list = (list_t *)list_malloc(sizeof(list_t));
     if (list == NULL)
@@ -22,6 +28,11 @@ list_t *list_init(void *(*list_malloc)(size_t), void (*list_free)(void *))
 
 void list_destroy(list_t *list)
 {
+    if (list == NULL)
+    {
+        return;
+    }
+
     list_node_t *cur  = list->head;
     list_node_t *next = NULL;
     while (cur)
@@ -30,11 +41,17 @@ void list_destroy(list_t *list)
         list->list_free(cur);
         cur = next;
     }
+    /* must be last reference to 'list' */
     list->list_free(list);
 }
 
 int list_add(list_t *list, void *element)
 {
+    if (element == NULL)
+    {
+        return 0;
+    }
+
     list_node_t *new_node =
         (list_node_t *)list->list_malloc(sizeof(list_node_t));
     if (new_node == NULL)
@@ -62,6 +79,11 @@ int list_add(list_t *list, void *element)
 
 int list_remove(list_t *list, void *element)
 {
+    if (list == NULL || element == NULL)
+    {
+        return 0;
+    }
+
     list_node_t *cur  = list->head;
     list_node_t *prev = NULL;
 
@@ -97,6 +119,11 @@ void list_foreach(list_t *list,
                   void (*process_func)(void *, void *),
                   void *context)
 {
+    if (list == NULL || process_func == NULL || context == NULL)
+    {
+        return;
+    }
+
     list_node_t *cur = list->head;
     while (cur)
     {
@@ -107,6 +134,11 @@ void list_foreach(list_t *list,
 
 void *list_get_at_index(list_t *list, unsigned int index)
 {
+    if (list == NULL)
+    {
+        return NULL;
+    }
+
     unsigned int i   = 0;
     list_node_t *cur = list->head;
     while (cur && i++ < index)
@@ -121,6 +153,11 @@ void *list_search(list_t *list,
                   char (*key_comparator)(void *, void *),
                   void *key)
 {
+    if (list == NULL || key_comparator == NULL || key == NULL)
+    {
+        return NULL;
+    }
+
     list_node_t *cur = list->head;
     while (cur)
     {
@@ -133,7 +170,7 @@ void *list_search(list_t *list,
     return NULL;
 }
 
-size_t list_count(list_t *list)
+inline size_t list_count(list_t *list)
 {
-    return list->count;
+    return list == NULL ? 0 : list->count;
 }

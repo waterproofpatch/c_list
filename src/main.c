@@ -116,13 +116,15 @@ int main(int argc, char **argv)
 
     // create a list
     list_t *list = list_init(malloc, free);
+    assert(list != NULL);
 
     // add our item
-    list_add(list, mystring1);
-    list_add(list, mystring2);
+    assert(list_add(list, mystring1));
+    assert(list_add(list, mystring2));
 
     // process each element
     list_foreach(list, item_processor, "pass me");
+
     // destroy the list
     list_destroy(list);
 
@@ -134,27 +136,26 @@ int main(int argc, char **argv)
     element_t *b = create_new_element(0xdeadbeef, 'b', 0xdead);
     element_t *c = create_new_element(0xdeadbeef, 'c', 0xdead);
     element_t *d = create_new_element(0xdeadbeef, 'd', 0xdead);
-
     assert(a != NULL);
     assert(b != NULL);
     assert(c != NULL);
     assert(d != NULL);
 
     list_foreach(list, print_list, NULL);
-
     list_destroy(list);
 
     list = list_init(malloc, free);
+    assert(list != NULL);
 
     assert(list_count(list) == 0);
-    list_add(list, a);
-    list_add(list, b);
-    list_add(list, c);
-    list_add(list, d);
+    assert(list_add(list, a));
+    assert(list_add(list, b));
+    assert(list_add(list, c));
+    assert(list_add(list, d));
     assert(list_count(list) == 4);
 
     element_t *elem0 = list_get_at_index(list, 2);
-    assert(elem0 != NULL);
+    assert(elem0 == c);
     assert(elem0->a == 0xdeadbeef);
     assert(elem0->b == 'c');
 
@@ -163,12 +164,12 @@ int main(int argc, char **argv)
 
     char       key0       = 'a';
     element_t *matching_a = list_search(list, element_comparator, &key0);
-    assert(matching_a != NULL);
+    assert(matching_a == a);
     assert(matching_a->b == key0);
 
     char       key1       = 'd';
     element_t *matching_d = list_search(list, element_comparator, &key1);
-    assert(matching_d != NULL);
+    assert(matching_d == d);
     assert(matching_d->b == key1);
 
     char       key2       = 'h';
@@ -177,23 +178,25 @@ int main(int argc, char **argv)
 
     list_foreach(list, print_list, NULL);
 
-    list_remove(list, c);
+    assert(list_remove(list, c));
     free(c);
     assert(list_count(list) == 3);
 
     list_foreach(list, print_list, NULL);
 
-    list_remove(list, a);
+    assert(list_remove(list, a));
     free(a);
     assert(list_count(list) == 2);
 
     list_foreach(list, print_list, NULL);
 
-    list_remove(list, d);
+    assert(list_remove(list, d));
     free(d);
     assert(list_count(list) == 1);
 
     list_foreach(list, print_list, NULL);
 
     list_destroy(list);
+
+    return 0;
 }
