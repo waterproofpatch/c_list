@@ -6,10 +6,8 @@ BUILD_DIR=build
 DOC_BUILD=doc
 
 .PHONY: test
-	test
 
 .PHONY: doc
-	doc
 
 all: setup doc
 	gcc -g $(SRC_DIR)/*.c -o $(BIN_DIR)/$(EXEC_NAME)
