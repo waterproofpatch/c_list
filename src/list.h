@@ -7,15 +7,24 @@
 
 #include <stddef.h>
 
+/**
+ * @brief A data entry within the list.
+ *
+ */
 typedef struct _list_node_t
 {
-    struct _list_node_t *next;   //!< pointer to next element in the list
-    void *element;   //!< pointer to the value element, allocated by user
+    struct _list_node_t *next; /** pointer to next element in the list */
+    void *element; /** pointer to the value element, allocated by user */
 } list_node_t;
 
+/**
+ * @brief List structure. Contains ptr to head and tail and
+ * addresses of functions to use for resource allocation and release.
+ *
+ */
 typedef struct _list_t
 {
-    list_node_t *head;   //!< pointer to head of the list
+    list_node_t *head;
     list_node_t *tail;
     void *(*list_malloc)(size_t);
     void (*list_free)(void *);
@@ -91,7 +100,7 @@ void *list_search(list_t *list,
 /**
  * @brief get the count of the list
  * @param list: the list to get the count of
- * @return: the size of the list
+ * @return: number of entries in the list
  */
 size_t list_count(list_t *list);
 
