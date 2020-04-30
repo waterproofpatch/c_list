@@ -1,3 +1,4 @@
+# Need this for travis automated builds
 #!/bin/bash
 sudo apt-get update
 sudo apt-get install python3-pip -y
