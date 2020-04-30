@@ -5,9 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
-
-/* sample data includes */
-#include "example1.h"
+#include <string.h>
 
 /* lib includes */
 #include "list.h"
@@ -23,12 +21,83 @@ typedef struct _element_t
     unsigned short c; /** dummy entry */
 } element_t;
 
-/* prototypes, defined below */
-static void       print_list(void *element, void *context);
-static char       element_comparator(void *element, void *context);
+/**
+ * @brief some generic processing routine
+ *
+ * @param item to process
+ * @param context user supplied argument
+ */
+static void item_processor(void *item, void *context)
+{
+    printf("got item: '%s', context '%s'\n", item, context);
+}
+
+/**
+ * @brief Create a new element object
+ *
+ * @param a some dummy value
+ * @param b some dummy value
+ * @param c some dummy value
+ * @return element_t*
+ */
 static element_t *create_new_element(unsigned int   a,
                                      unsigned int   b,
-                                     unsigned short c);
+                                     unsigned short c)
+{
+    element_t *elem = (element_t *)malloc(sizeof(element_t *));
+    if (elem == NULL)
+    {
+        printf("Failed allocating a new element\n");
+        return NULL;
+    }
+    elem->a = a;
+    elem->b = b;
+    elem->c = c;
+    return elem;
+}
+
+/**
+ * @brief print each element in the list
+ *
+ * @param element data entry
+ * @param context user-supplied context (argument(s))
+ */
+static void print_list(void *element, void *context)
+{
+    if (element == NULL)
+    {
+        printf("invalid argument\n");
+        return;
+    }
+    element_t *elem = (element_t *)element;
+    printf("elem->a: 0x%08x\nelem->b: %c\nelem->c: 0x%04x\n", elem->a, elem->b,
+           elem->c);
+}
+
+/**
+ * @brief compare like-elements in this list.
+ *
+ * @param element
+ * @param context user-supplied context (argument(s))
+ * @return char 1 if the two elements are equal, 0 otherwise
+ */
+static char element_comparator(void *element, void *context)
+{
+    /* need both these things to be non null */
+    if (element == NULL || context == NULL)
+    {
+        return 0;
+    }
+
+    element_t *elem = (element_t *)element;
+    char       key  = *(char *)context;
+
+    if (elem->b == key)
+    {
+        return 1;
+    }
+    return 0;
+}
 
 /**
  * @brief Entry point.
@@ -39,15 +108,37 @@ static element_t *create_new_element(unsigned int   a,
  */
 int main(int argc, char **argv)
 {
-    // kick off the example, showing some usage
-    example1_run();
+    // item to add to list
+    char *mystring1 = (char *)malloc(strlen("this is my string1") + 1);
+    char *mystring2 = (char *)malloc(strlen("this is my string2") + 1);
+    strcpy(mystring1, "this is my string1");
+    strcpy(mystring2, "this is my string2");
+
+    // create a list
+    list_t *list = list_init(malloc, free);
+
+    // add our item
+    list_add(list, mystring1);
+    list_add(list, mystring2);
+
+    // process each element
+    list_foreach(list, item_processor, "pass me");
+    // destroy the list
+    list_destroy(list);
+
+    // re-initialize the list
+    list = list_init(malloc, free);
+    assert(list != NULL);
 
     element_t *a = create_new_element(0xdeadbeef, 'a', 0xdead);
     element_t *b = create_new_element(0xdeadbeef, 'b', 0xdead);
     element_t *c = create_new_element(0xdeadbeef, 'c', 0xdead);
     element_t *d = create_new_element(0xdeadbeef, 'd', 0xdead);
 
-    list_t *list = list_init(malloc, free);
+    assert(a != NULL);
+    assert(b != NULL);
+    assert(c != NULL);
+    assert(d != NULL);
 
     list_foreach(list, print_list, NULL);
 
@@ -105,69 +196,4 @@ int main(int argc, char **argv)
     list_foreach(list, print_list, NULL);
 
     list_destroy(list);
-}
-
-/**
- * @brief Create a new element object
- *
- * @param a some dummy value
- * @param b some dummy value
- * @param c some dummy value
- * @return element_t*
- */
-element_t *create_new_element(unsigned int a, unsigned int b, unsigned short c)
-{
-    element_t *elem = (element_t *)malloc(sizeof(element_t *));
-    if (elem == NULL)
-    {
-        printf("Failed allocating a new element\n");
-        return NULL;
-    }
-    elem->a = a;
-    elem->b = b;
-    elem->c = c;
-    return elem;
-}
-
-/**
- * @brief print each element in the list
- *
- * @param element data entry
- * @param context user-supplied context (argument(s))
- */
-void print_list(void *element, void *context)
-{
-    if (element == NULL)
-    {
-        printf("invalid argument\n");
-        return;
-    }
-    element_t *elem = (element_t *)element;
-    printf("elem->a: 0x%08x\nelem->b: %c\nelem->c: 0x%04x\n", elem->a, elem->b,
-           elem->c);
-}
-
-/**
- * @brief compare like-elements in this list.
- *
- * @param element
- * @param context user-supplied context (argument(s))
- * @return char 1 if the two elements are equal, 0 otherwise
- */
-char element_comparator(void *element, void *context)
-{
-    /* need both these things to be non null */
-    if (element == NULL || context == NULL)
-    {
-        return 0;
-    }
-
-    element_t *elem = (element_t *)element;
-    char       key  = *(char *)context;
-
-    if (elem->b == key)
-    {
-        return 1;
-    }
-    return 0;
 }
