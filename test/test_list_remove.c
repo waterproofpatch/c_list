@@ -74,3 +74,33 @@ void test_list_remove_head()
     TEST_ASSERT_EQUAL(0xfeedface, list.head->element);
     TEST_ASSERT_EQUAL(1, g_num_frees);
 }
+
+/**
+ * @brief test that we can remove an item in the middle of the list
+ * */
+void test_list_remove_middle()
+{
+    list_node_t node_1 = {0};
+    list_node_t node_2 = {0};
+    list_node_t node_3 = {0};
+    list_t      list   = {0};
+
+    node_1.element = (void *)1;
+    node_1.next    = &node_2;
+    node_2.element = (void *)2;
+    node_2.next    = &node_3;
+    node_3.element = (void *)3;
+    node_3.next    = NULL;
+
+    list.head      = &node_1;
+    list.tail      = &node_3;
+    list.count     = 3;
+    list.list_free = stub_list_free;
+
+    g_expected = &node_2; /* the middle */
+    TEST_ASSERT_EQUAL(1, list_remove(&list, node_2.element));
+    TEST_ASSERT_EQUAL(2, list.count);
+    TEST_ASSERT_EQUAL(&node_1, list.head);
+    TEST_ASSERT_EQUAL(&node_3, list.tail);
+    TEST_ASSERT_EQUAL(1, g_num_frees);
+}
