@@ -51,6 +51,7 @@ void test_list_remove_tail()
     TEST_ASSERT_EQUAL(1, list_remove(&list, node_2.element));
     TEST_ASSERT_EQUAL(1, list.count);
     TEST_ASSERT_EQUAL(list.head, list.tail);
+    TEST_ASSERT_EQUAL((void *)1, list.head->element);
     TEST_ASSERT_EQUAL(1, g_num_frees);
 }
 
@@ -77,6 +78,7 @@ void test_list_remove_head()
     TEST_ASSERT_EQUAL(1, list_remove(&list, node_1.element));
     TEST_ASSERT_EQUAL(1, list.count);
     TEST_ASSERT_EQUAL(list.head, list.tail);
+    TEST_ASSERT_EQUAL((void *)2, list.head->element);
     TEST_ASSERT_EQUAL(1, g_num_frees);
 }
 
