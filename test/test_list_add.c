@@ -8,27 +8,25 @@
 #include "list.h"
 
 static int         g_stub_malloc_calls = 0;
-static int         g_stub_free_calls   = 0;
 static list_node_t g_test_elems[2]     = {{0}, {0}};
 
 void setUp()
 {
     g_stub_malloc_calls = 0;
-    g_stub_free_calls   = 0;
 }
 
 void tearDown()
 {
 }
 
+void *stub_malloc_null(size_t size)
+{
+    return NULL;
+}
+
 void *stub_malloc(size_t size)
 {
     return &g_test_elems[g_stub_malloc_calls++];
-}
-
-void stub_free(void *ptr)
-{
-    g_stub_free_calls++;
 }
 
 void test_list_add_success()
@@ -37,7 +35,6 @@ void test_list_add_success()
     list_t list      = {0};
     int    ret       = 0;
     list.list_malloc = stub_malloc;
-    list.list_free   = stub_free;
     char elem        = 'a';
 
     /* Mocks */
@@ -61,7 +58,6 @@ void test_list_add_second_elem_success()
     list_t list      = {0};
     int    ret       = 0;
     list.list_malloc = stub_malloc;
-    list.list_free   = stub_free;
     char elem1       = 'a';
     char elem2       = 'b';
 
@@ -120,4 +116,24 @@ void test_list_add_fail_invalid_elem()
 
     /* Assertions */
     TEST_ASSERT_EQUAL(0, ret);
+}
+
+void test_list_add_fail_list_malloc()
+{
+    /* Locals */
+    list_t list      = {0};
+    int    ret       = 0;
+    list.list_malloc = stub_malloc_null;
+    char elem        = 'a';
+
+    /* Mocks */
+
+    /* Call function under test */
+    ret = list_add(&list, &elem);
+
+    /* Assertions */
+    TEST_ASSERT_EQUAL(0, ret);
+    TEST_ASSERT_EQUAL(NULL, list.head);
+    TEST_ASSERT_EQUAL(NULL, list.tail);
+    TEST_ASSERT_EQUAL(0, list.count);
 }
