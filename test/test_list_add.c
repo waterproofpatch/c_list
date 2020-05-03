@@ -91,3 +91,33 @@ void test_list_add_second_elem_success()
     TEST_ASSERT_EQUAL(&g_test_elems[1], list.tail);
     TEST_ASSERT_EQUAL(NULL, list.tail->next);
 }
+
+void test_list_add_fail_invalid_list()
+{
+    /* Locals */
+    int  ret   = 0;
+    char elem1 = 'a';
+
+    /* Mocks */
+
+    /* Call function under test */
+    ret = list_add(NULL, &elem1);
+
+    /* Assertions */
+    TEST_ASSERT_EQUAL(0, ret);
+}
+
+void test_list_add_fail_invalid_elem()
+{
+    /* Locals */
+    list_t list = {0};
+    int    ret  = 0;
+
+    /* Mocks */
+
+    /* Call function under test */
+    ret = list_add(&list, NULL);
+
+    /* Assertions */
+    TEST_ASSERT_EQUAL(0, ret);
+}

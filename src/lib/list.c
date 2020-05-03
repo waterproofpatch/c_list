@@ -47,7 +47,7 @@ void list_destroy(list_t *list)
 
 int list_add(list_t *list, void *element)
 {
-    if (element == NULL)
+    if (list == NULL || element == NULL)
     {
         return 0;
     }
