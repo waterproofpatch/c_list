@@ -111,3 +111,21 @@ void test_list_remove_middle()
     TEST_ASSERT_EQUAL(&node_3, list.tail);
     TEST_ASSERT_EQUAL(1, g_num_frees);
 }
+
+/**
+ * @brief test that the list handles invalid arguments
+ * */
+void test_list_remove_fail_invalid_element()
+{
+    list_t list;
+    TEST_ASSERT_EQUAL(0, list_remove(&list, NULL));
+}
+
+/**
+ * @brief test that the list handles invalid arguments
+ * */
+void test_list_remove_fail_invalid_list()
+{
+    int element;
+    TEST_ASSERT_EQUAL(0, list_remove(NULL, &element));
+}
