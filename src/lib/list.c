@@ -72,7 +72,7 @@ int list_add(list_t *list, void *element)
 
     // append element
     list->tail->next = new_node;
-    list->tail       = new_node;
+    list->tail       = list->tail->next;
     list->count++;
     return 1;
 }

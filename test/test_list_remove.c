@@ -3,7 +3,6 @@
 #include "unity.h"
 
 // mocks
-#include "mock_std_lib_wrapper.h"
 
 // code under test
 #include "list.h"
