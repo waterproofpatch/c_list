@@ -12,8 +12,17 @@ INCLUDES=-I$(LIB_DIR)
 
 .PHONY: doc
 
-all: setup doc
-	gcc -g $(INCLUDES) $(SRC_DIR)/*.c $(LIB_DIR)/*.c -o $(BIN_DIR)/$(EXEC_NAME)
+# Everything
+all: driver setup doc
+
+# The driver program
+driver: list
+	gcc -g $(INCLUDES) $(SRC_DIR)/main.c -L$(BIN_DIR) -llist -o $(BIN_DIR)/$(EXEC_NAME)
+
+# The list static library
+list:
+	gcc -c -I$(LIB_DIR) $(LIB_DIR)/*.c -o $(BIN_DIR)/list.o
+	ar -rc $(BIN_DIR)/liblist.a $(BIN_DIR)/list.o
 
 doc:
 	@doxygen Doxyfile 
