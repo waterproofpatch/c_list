@@ -52,3 +52,25 @@ void test_list_remove_tail()
     TEST_ASSERT_EQUAL(0xdeadbeef, list.head->element);
     TEST_ASSERT_EQUAL(1, g_num_frees);
 }
+
+/**
+ * @brief test that we can remove the head of the list
+ * */
+void test_list_remove_head()
+{
+    list_t list     = {0};
+    list.head       = &g_node[0];
+    list.tail       = &g_node[1];
+    list.tail->next = NULL;
+    list.head->next = list.tail;
+    list.count      = 2;
+    list.list_free  = stub_list_free;
+
+    g_expected = &g_node[0]; /* the head */
+    TEST_ASSERT_EQUAL(1, list_remove(&list, g_node[0].element));
+    TEST_ASSERT_EQUAL(1, list.count);
+    TEST_ASSERT_EQUAL(list.head, list.tail);
+    TEST_ASSERT_EQUAL(0xfeedface, list.tail->element);
+    TEST_ASSERT_EQUAL(0xfeedface, list.head->element);
+    TEST_ASSERT_EQUAL(1, g_num_frees);
+}
