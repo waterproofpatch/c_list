@@ -21,6 +21,12 @@ See `src/main.c`
 make
 ```
 
+### Library
+
+```bash
+make list
+```
+
 ### Tests
 
 ```bash
@@ -35,7 +41,7 @@ make run
 
 ## Run Tests
 
-This assumes you have ruby/ceedling
+This assumes you have ruby/ceedling installed.
 
 ```bash
 make test

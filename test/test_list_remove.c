@@ -7,18 +7,28 @@
 // code under test
 #include "list.h"
 
+// globals
+static list_node_t g_node[] = {
+    {.next = &g_node[1], .element = (void *)0xdeadbeef},
+    {.next = NULL, .element = (void *)0xfeedface}};
+static int   g_num_frees = 0;
+static void *g_expected  = NULL;
+
 void setUp()
 {
+    g_num_frees = 0;
 }
 
 void tearDown()
 {
 }
 
-void list_free(void *ptr)
+void stub_list_free(void *ptr)
 {
     TEST_ASSERT_NOT_NULL(ptr);
-    free(ptr);
+    TEST_ASSERT_NOT_NULL(g_expected);
+    TEST_ASSERT_EQUAL(ptr, g_expected);
+    g_num_frees++;
 }
 
 /**
@@ -26,41 +36,19 @@ void list_free(void *ptr)
  * */
 void test_list_remove_tail()
 {
-    list_t *l        = malloc(sizeof(list_t));
-    l->head          = malloc(sizeof(list_node_t));
-    l->head->element = (void *)4;
-    l->tail          = malloc(sizeof(list_node_t));
-    l->tail->element = (void *)5;
-    l->tail->next    = NULL;
-    l->head->next    = l->tail;
-    l->count         = 2;
-    l->list_free     = list_free;
+    list_t list     = {0};
+    list.head       = &g_node[0];
+    list.tail       = &g_node[1];
+    list.tail->next = NULL;
+    list.head->next = list.tail;
+    list.count      = 2;
+    list.list_free  = stub_list_free;
 
-    TEST_ASSERT_EQUAL(1, list_remove(l, l->tail->element));
-    TEST_ASSERT_EQUAL(1, l->count);
-    TEST_ASSERT_EQUAL(l->head, l->tail);
-    TEST_ASSERT_EQUAL(4, l->tail->element);
-    TEST_ASSERT_EQUAL(4, l->head->element);
-}
-
-/**
- * @brief test that we can remove the head of the list
- * */
-void test_list_remove_head()
-{
-    list_t *l        = malloc(sizeof(list_t));
-    l->head          = malloc(sizeof(list_node_t));
-    l->head->element = (void *)4;
-    l->tail          = malloc(sizeof(list_node_t));
-    l->tail->element = (void *)5;
-    l->tail->next    = NULL;
-    l->head->next    = l->tail;
-    l->count         = 2;
-    l->list_free     = list_free;
-
-    TEST_ASSERT_EQUAL(1, list_remove(l, l->head->element));
-    TEST_ASSERT_EQUAL(1, l->count);
-    TEST_ASSERT_EQUAL(l->head, l->tail);
-    TEST_ASSERT_EQUAL(5, l->tail->element);
-    TEST_ASSERT_EQUAL(5, l->head->element);
+    g_expected = &g_node[1]; /* the tail */
+    TEST_ASSERT_EQUAL(1, list_remove(&list, list.tail->element));
+    TEST_ASSERT_EQUAL(1, list.count);
+    TEST_ASSERT_EQUAL(list.head, list.tail);
+    TEST_ASSERT_EQUAL(0xdeadbeef, list.tail->element);
+    TEST_ASSERT_EQUAL(0xdeadbeef, list.head->element);
+    TEST_ASSERT_EQUAL(1, g_num_frees);
 }
