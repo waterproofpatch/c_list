@@ -131,7 +131,7 @@ void test_list_remove_does_not_exist()
 
     list.head      = &node_1;
     list.tail      = &node_3;
-    list.count     = 3;
+    list.count     = 2;
     list.list_free = stub_list_free;
 
     TEST_ASSERT_EQUAL(0, list_remove(&list, node_2.element));
