@@ -2,5 +2,5 @@ language: c
 sudo: required
 install: ./install-deps.sh
 script: make && make run && make test
-before_install:
-  - gem update bundler
+rvm:
+  - 2.5
