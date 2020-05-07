@@ -1,4 +1,4 @@
-# Linked List in C
+[![Build Status](https://travis-ci.com/waterproofpatch/c_list.svg?branch=master)](https://travis-ci.com/waterproofpatch/c_list)# Linked List in C
 
 Simple linked list implementation in C (using only the C standard library).
 
