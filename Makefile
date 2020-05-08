@@ -9,11 +9,16 @@ DOC_BUILD=doc
 INCLUDES=-I$(LIB_DIR)
 
 .PHONY: test
-
 .PHONY: doc
-
+.PHONY: dirs
 # Everything
-all: driver setup doc
+all: dirs driver setup doc
+
+
+# Create the output directories
+dirs: 
+	mkdir -p $(BIN_DIR)
+	mkdir -p $(BUILD_DIR)
 
 # The driver program
 driver: list
