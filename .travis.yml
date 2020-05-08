@@ -6,9 +6,10 @@ before-install:
   - sudo apt-get install doxygen -y
   - sudo apt-get install gcc -y
   - sudo pip3 install gcovr
-  - sudo gem install ceedling
+  - sudo apt-get install ruby-full
   - gem install rubygems-update
   - update_rubygems
+  - sudo gem install ceedling
 
 script: make && make run && make test
 rvm:
