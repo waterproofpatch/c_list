@@ -6,6 +6,9 @@ EXEC_NAME=main
 BUILD_DIR=build
 DOC_BUILD=doc
 
+CFLAGS=-Wall -Werror
+CC=gcc
+
 INCLUDES=-I$(LIB_DIR)
 
 .PHONY: test
@@ -21,12 +24,12 @@ dirs:
 	mkdir -p $(BUILD_DIR)
 
 # The driver program
-driver: list
-	gcc -g $(INCLUDES) $(SRC_DIR)/main.c -L$(BIN_DIR) -llist -o $(BIN_DIR)/$(EXEC_NAME)
+driver: dirs lib
+	$(CC) -g $(CFLAGS) $(INCLUDES) $(SRC_DIR)/main.c -L$(BIN_DIR) -llist -o $(BIN_DIR)/$(EXEC_NAME)
 
 # The list static library
-list:
-	gcc -c -I$(LIB_DIR) $(LIB_DIR)/*.c -o $(BIN_DIR)/list.o
+lib: dirs
+	$(CC) -c $(CFLAGS) -I$(LIB_DIR) $(LIB_DIR)/*.c -o $(BIN_DIR)/list.o
 	ar -rc $(BIN_DIR)/liblist.a $(BIN_DIR)/list.o
 
 doc:
