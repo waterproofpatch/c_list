@@ -7,6 +7,8 @@ before-install:
   - sudo apt-get install gcc -y
   - sudo pip3 install gcovr
   - sudo gem install ceedling
+  - gem install rubygems-update
+  - update_rubygems
 
 script: make && make run && make test
 rvm:
