@@ -1,4 +1,4 @@
-language: ruby
+language: c
 
 before-install:
   - sudo apt-get update
@@ -12,4 +12,4 @@ before-install:
 
 script: make && make run && make test
 rvm:
-  - 2.4.0
+  - 2.5.3
