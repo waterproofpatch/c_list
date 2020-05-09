@@ -6,31 +6,20 @@
 /* code under test */
 #include "list.h"
 
-/* test globals */
-static int g_num_frees = 0;
-
 void setUp()
 {
-    g_num_frees = 0;
 }
 
 void tearDown()
 {
 }
 
-void stub_free(void *ptr)
-{
-    TEST_ASSERT_NOT_NULL(ptr);
-    g_num_frees++;
-}
-
-void *stub_malloc(size_t size)
-{
-    /* always fail this, nothing in destroy should call malloc */
-    TEST_ASSERT_FALSE_MESSAGE(1, "stub_malloc called when it should not be");
-    return NULL;
-}
-
+/**
+ * @brief verify process_func is called correctly
+ *
+ * @param elem element to process
+ * @param context optional argument to process (should be NULL)
+ */
 void stub_test_list_foreach_success_null_context_process_func(void *elem,
                                                               void *context)
 {
@@ -46,13 +35,19 @@ void test_list_foreach_success_null_context()
     list_t list = {.head        = &entry_1,
                    .tail        = &entry_1,
                    .count       = 0,
-                   .list_free   = stub_free,
-                   .list_malloc = stub_malloc};
+                   .list_free   = (void (*)(void *))0xdeadbeef,
+                   .list_malloc = (void *(*)(size_t))0xfeedface};
 
     list_foreach(
         &list, stub_test_list_foreach_success_null_context_process_func, NULL);
 }
 
+/**
+ * @brief verify process-func is called correctly with a non-null context
+ *
+ * @param elem element to process
+ * @param context optional argument to process (should not be NULL)
+ */
 void stub_test_list_foreach_success_non_null_context_process_func(void *elem,
                                                                   void *context)
 {
@@ -69,8 +64,8 @@ void test_list_foreach_success_non_null_context()
     list_t list = {.head        = &entry_1,
                    .tail        = &entry_1,
                    .count       = 0,
-                   .list_free   = stub_free,
-                   .list_malloc = stub_malloc};
+                   .list_free   = (void (*)(void *))0xdeadbeef,
+                   .list_malloc = (void *(*)(size_t))0xf00dface};
 
     list_foreach(&list,
                  stub_test_list_foreach_success_non_null_context_process_func,
