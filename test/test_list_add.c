@@ -48,7 +48,7 @@ void test_list_add_success()
  * @brief allocate two nodes
  *
  * @param size size of the allocation to make
- * @return void* NULL
+ * @return void* one of two potential allocations
  */
 void *stub_test_list_add_succeed_two_elements_list_malloc(size_t size)
 {
@@ -82,7 +82,7 @@ void test_list_add_success_two_elements()
 }
 
 /**
- * @brief allocate two nodes
+ * @brief fail to allocate
  *
  * @param size size of the allocation to make
  * @return void* NULL
