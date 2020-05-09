@@ -30,14 +30,15 @@ void stub_test_list_foreach_success_null_context_process_func(void *elem,
 
 void test_list_foreach_success_null_context()
 {
+    /* Locals */
     list_node_t entry_1 = {.element = (void *)0xdeadbeef, .next = NULL};
-
-    list_t list = {.head        = &entry_1,
+    list_t      list    = {.head        = &entry_1,
                    .tail        = &entry_1,
                    .count       = 0,
                    .list_free   = (void (*)(void *))0xdeadbeef,
                    .list_malloc = (void *(*)(size_t))0xfeedface};
 
+    /* Inoke code under test*/
     list_foreach(
         &list, stub_test_list_foreach_success_null_context_process_func, NULL);
 }
@@ -59,6 +60,7 @@ void stub_test_list_foreach_success_non_null_context_process_func(void *elem,
 
 void test_list_foreach_success_non_null_context()
 {
+    /* Locals */
     list_node_t entry_1 = {.element = (void *)0xdeadbeef, .next = NULL};
 
     list_t list = {.head        = &entry_1,
@@ -67,6 +69,7 @@ void test_list_foreach_success_non_null_context()
                    .list_free   = (void (*)(void *))0xdeadbeef,
                    .list_malloc = (void *(*)(size_t))0xf00dface};
 
+    /* Inoke code under test*/
     list_foreach(&list,
                  stub_test_list_foreach_success_non_null_context_process_func,
                  (void *)0xfeedface);
@@ -74,10 +77,12 @@ void test_list_foreach_success_non_null_context()
 
 void test_list_foreach_invalid_list()
 {
+    /* Inoke code under test*/
     list_foreach(NULL, (void *)0xdeadf00d, (void *)0xfeedface);
 }
 
 void test_list_foreach_invalid_process_func()
 {
+    /* Inoke code under test*/
     list_foreach((void *)0xdeadbeef, NULL, (void *)0xfeedface);
 }
