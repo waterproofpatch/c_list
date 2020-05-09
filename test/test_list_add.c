@@ -1,139 +1,123 @@
-// #include <stddef.h>
-// #include <stdlib.h>
-// #include "unity.h"
+#include <stddef.h>
+#include <stdlib.h>
 
-// // mocks
+#include "unity.h"
 
-// /* code under test */
-// #include "list.h"
+/* code under test */
+#include "list.h"
 
-// static int         g_stub_malloc_calls = 0;
-// static list_node_t g_test_elems[2]     = {{0}, {0}};
+void setUp()
+{
+}
 
-// void setUp()
-// {
-//     g_stub_malloc_calls = 0;
-// }
+void tearDown()
+{
+}
 
-// void tearDown()
-// {
-// }
+/**
+ * @brief allocate a new list node
+ *
+ * @param size size of the allocation to make
+ * @return void* newly created resource
+ */
+void *stub_test_list_add_success_list_malloc(size_t size)
+{
+    TEST_ASSERT_EQUAL(sizeof(list_node_t), size);
+    static list_node_t ret = {.next = NULL, .element = NULL};
+    return &ret;
+}
 
-// void *stub_malloc_null(size_t size)
-// {
-//     return NULL;
-// }
+void test_list_add_success()
+{
+    /* Locals */
+    list_t list = {.head        = NULL,
+                   .tail        = NULL,
+                   .count       = 0,
+                   .list_malloc = stub_test_list_add_success_list_malloc};
 
-// void *stub_malloc(size_t size)
-// {
-//     return &g_test_elems[g_stub_malloc_calls++];
-// }
+    /* Invoke function under test */
+    TEST_ASSERT_EQUAL(1, list_add(&list, (void *)0xdeadbeef));
 
-// void test_list_add_success()
-// {
-//     /* Locals */
-//     list_t list      = {0};
-//     int    ret       = 0;
-//     list.list_malloc = stub_malloc;
-//     char elem        = 'a';
+    /* Assertions */
+    TEST_ASSERT_NOT_NULL(list.head);
+    TEST_ASSERT_EQUAL((void *)0xdeadbeef, list.head->element);
+    TEST_ASSERT_EQUAL(1, list.count);
+}
 
-//     /* Mocks */
+/**
+ * @brief allocate two nodes
+ *
+ * @param size size of the allocation to make
+ * @return void* NULL
+ */
+void *stub_test_list_add_succeed_two_elements_list_malloc(size_t size)
+{
+    TEST_ASSERT_EQUAL(sizeof(list_node_t), size);
+    static int         num_calls = 0;
+    static list_node_t ret[2]    = {{.next = NULL, .element = NULL},
+                                 {.next = NULL, .element = NULL}};
+    num_calls++;
+    return &ret[num_calls];
+}
 
-//     /* Call function under test */
-//     ret = list_add(&list, &elem);
+void test_list_add_success_two_elements()
+{
+    /* Locals */
+    list_t list = {
+        .head        = NULL,
+        .tail        = NULL,
+        .count       = 0,
+        .list_malloc = stub_test_list_add_succeed_two_elements_list_malloc};
 
-//     /* Assertions */
-//     TEST_ASSERT_EQUAL(1, ret);
-//     TEST_ASSERT_EQUAL(1, list.count);
-//     TEST_ASSERT_EQUAL(1, g_stub_malloc_calls);
-//     TEST_ASSERT_EQUAL(&g_test_elems[0], list.head);
-//     TEST_ASSERT_EQUAL(&g_test_elems[0], list.tail);
-//     TEST_ASSERT_EQUAL(NULL, list.head->next);
-//     TEST_ASSERT_EQUAL(NULL, list.tail->next);
-// }
+    /* Invoke function under test */
+    TEST_ASSERT_EQUAL(1, list_add(&list, (void *)123));
+    TEST_ASSERT_EQUAL(1, list_add(&list, (void *)345));
 
-// void test_list_add_second_elem_success()
-// {
-//     /* Locals */
-//     list_t list      = {0};
-//     int    ret       = 0;
-//     list.list_malloc = stub_malloc;
-//     char elem1       = 'a';
-//     char elem2       = 'b';
+    /* Assertions */
+    TEST_ASSERT_NOT_NULL(list.head);
+    TEST_ASSERT_NOT_NULL(list.tail);
+    TEST_ASSERT_EQUAL(2, list.count);
+    TEST_ASSERT_EQUAL((void *)123, list.head->element);
+    TEST_ASSERT_EQUAL((void *)345, list.tail->element);
+}
 
-//     /* Mocks */
+/**
+ * @brief allocate two nodes
+ *
+ * @param size size of the allocation to make
+ * @return void* NULL
+ */
+void *stub_test_list_add_fail_no_mem(size_t size)
+{
+    TEST_ASSERT_EQUAL(sizeof(list_node_t), size);
+    return NULL;
+}
 
-//     /* Call function under test */
-//     ret = list_add(&list, &elem1);
+void test_list_add_fail_no_mem()
+{
+    /* Locals */
+    list_t list = {.head        = NULL,
+                   .tail        = NULL,
+                   .count       = 0,
+                   .list_malloc = stub_test_list_add_fail_no_mem};
 
-//     /* Assertions */
-//     TEST_ASSERT_EQUAL(1, ret);
-//     TEST_ASSERT_EQUAL(1, list.count);
-//     TEST_ASSERT_EQUAL(1, g_stub_malloc_calls);
-//     TEST_ASSERT_EQUAL(&g_test_elems[0], list.head);
-//     TEST_ASSERT_EQUAL(&g_test_elems[0], list.tail);
-//     TEST_ASSERT_EQUAL(NULL, list.head->next);
-//     TEST_ASSERT_EQUAL(NULL, list.tail->next);
+    /* Invoke function under test */
+    TEST_ASSERT_EQUAL(0, list_add(&list, (void *)123));
 
-//     /* Call function under test */
-//     ret = list_add(&list, &elem2);
+    /* Assertions */
+    TEST_ASSERT_NULL(list.head);
+    TEST_ASSERT_NULL(list.tail);
+    TEST_ASSERT_EQUAL(0, list.count);
+}
 
-//     /* Assertions */
-//     TEST_ASSERT_EQUAL(1, ret);
-//     TEST_ASSERT_EQUAL(2, list.count);
-//     TEST_ASSERT_EQUAL(2, g_stub_malloc_calls);
-//     TEST_ASSERT_EQUAL(&g_test_elems[0], list.head);
-//     TEST_ASSERT_EQUAL(&g_test_elems[1], list.head->next);
-//     TEST_ASSERT_EQUAL(&g_test_elems[1], list.tail);
-//     TEST_ASSERT_EQUAL(NULL, list.tail->next);
-// }
+void test_list_add_fail_invalid_list()
+{
+    /* Invoke function under test */
+    TEST_ASSERT_EQUAL(0, list_add(NULL, (void *)123));
+}
 
-// void test_list_add_fail_invalid_list()
-// {
-//     /* Locals */
-//     int  ret   = 0;
-//     char elem1 = 'a';
-
-//     /* Mocks */
-
-//     /* Call function under test */
-//     ret = list_add(NULL, &elem1);
-
-//     /* Assertions */
-//     TEST_ASSERT_EQUAL(0, ret);
-// }
-
-// void test_list_add_fail_invalid_elem()
-// {
-//     /* Locals */
-//     list_t list = {0};
-//     int    ret  = 0;
-
-//     /* Mocks */
-
-//     /* Call function under test */
-//     ret = list_add(&list, NULL);
-
-//     /* Assertions */
-//     TEST_ASSERT_EQUAL(0, ret);
-// }
-
-// void test_list_add_fail_list_malloc()
-// {
-//     /* Locals */
-//     list_t list      = {0};
-//     int    ret       = 0;
-//     list.list_malloc = stub_malloc_null;
-//     char elem        = 'a';
-
-//     /* Mocks */
-
-//     /* Call function under test */
-//     ret = list_add(&list, &elem);
-
-//     /* Assertions */
-//     TEST_ASSERT_EQUAL(0, ret);
-//     TEST_ASSERT_EQUAL(NULL, list.head);
-//     TEST_ASSERT_EQUAL(NULL, list.tail);
-//     TEST_ASSERT_EQUAL(0, list.count);
-// }
+void test_list_add_fail_invalid_element()
+{
+    /* Invoke function under test */
+    TEST_ASSERT_EQUAL(0, list_add((list_t *)0xdeadbeef, (void *)NULL));
+}
