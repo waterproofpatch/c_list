@@ -24,16 +24,9 @@ void stub_free(void *ptr)
     g_num_frees++;
 }
 
-void *stub_malloc(size_t size)
-{
-    /* always fail this, nothing in destroy should call malloc */
-    TEST_ASSERT_FALSE_MESSAGE(1, "stub_malloc called when it should not be");
-    return NULL;
-}
-
 void test_list_destroy_success()
 {
-    list_t list = {.list_malloc = stub_malloc,
+    list_t list = {.list_malloc = (void (*)(size_t))0xdeadbeef,
                    .list_free   = stub_free,
                    .head        = NULL,
                    .tail        = NULL,
@@ -47,7 +40,7 @@ void test_list_destroy_success_one_entry()
 {
     list_node_t entry_1 = {.element = (void *)0xdeadbeef, .next = NULL};
 
-    list_t list = {.list_malloc = stub_malloc,
+    list_t list = {.list_malloc = (void (*)(size_t))0xdeadbeef,
                    .list_free   = stub_free,
                    .head        = &entry_1,
                    .tail        = &entry_1,
@@ -62,7 +55,7 @@ void test_list_destroy_success_two_entries()
     list_node_t entry_1 = {.element = (void *)0xdeadbeef, .next = NULL};
     list_node_t entry_2 = {.element = (void *)0xfeedface, .next = &entry_1};
 
-    list_t list = {.list_malloc = stub_malloc,
+    list_t list = {.list_malloc = (void (*)(size_t))0xdeadbeef,
                    .list_free   = stub_free,
                    .head        = &entry_2,
                    .tail        = &entry_1,
