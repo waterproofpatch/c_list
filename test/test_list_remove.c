@@ -146,8 +146,7 @@ void test_list_remove_does_not_exist()
  * */
 void test_list_remove_fail_invalid_element()
 {
-    list_t list;
-    TEST_ASSERT_EQUAL(0, list_remove(&list, NULL));
+    TEST_ASSERT_EQUAL(0, list_remove((list_t *)0xdeadbeef, NULL));
 }
 
 /**
@@ -155,6 +154,5 @@ void test_list_remove_fail_invalid_element()
  * */
 void test_list_remove_fail_invalid_list()
 {
-    int element;
-    TEST_ASSERT_EQUAL(0, list_remove(NULL, &element));
+    TEST_ASSERT_EQUAL(0, list_remove(NULL, (void *)0xdeadbeef));
 }

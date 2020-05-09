@@ -20,6 +20,12 @@ void tearDown()
 {
 }
 
+/**
+ * @brief verify that we allocate resources for the list structure
+ *
+ * @param size of the list structure
+ * @return void* newly created resource
+ */
 void *stub_test_list_init_success_list_malloc(size_t size)
 {
     TEST_ASSERT_EQUAL(sizeof(list_t), size);
@@ -29,8 +35,11 @@ void *stub_test_list_init_success_list_malloc(size_t size)
 
 void test_list_init_success()
 {
+    /* Invoke code under test */
     list_t *list = list_init(stub_test_list_init_success_list_malloc,
                              (void (*)(void *))0xdeadbeef);
+
+    /* Assertions */
     TEST_ASSERT_EQUAL(&g_list, list);
     TEST_ASSERT_EQUAL(stub_test_list_init_success_list_malloc,
                       list->list_malloc);
@@ -42,13 +51,19 @@ void test_list_init_success()
 
 void test_list_init_fail_invalid_list_malloc()
 {
+    /* Invoke code under test */
     list_t *list = list_init(NULL, (void (*)(void *))0xdeadbeef);
+
+    /* Assertions */
     TEST_ASSERT_EQUAL(NULL, list);
 }
 
 void test_list_init_fail_invalid_list_free()
 {
+    /* Invoke code under test */
     list_t *list = list_init(stub_test_list_init_success_list_malloc, NULL);
+
+    /* Assertions */
     TEST_ASSERT_EQUAL(NULL, list);
 }
 
@@ -59,7 +74,10 @@ void *stub_test_list_init_fail_no_mem_list_malloc(size_t size)
 }
 void test_list_init_fail_no_mem()
 {
+    /* Invoke code under test */
     list_t *list = list_init(stub_test_list_init_fail_no_mem_list_malloc,
                              (void (*)(void *))0xdeadbeef);
+
+    /* Assertions */
     TEST_ASSERT_EQUAL(NULL, list);
 }
