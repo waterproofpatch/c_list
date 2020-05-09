@@ -4,7 +4,7 @@
 
 // mocks
 
-// code under test
+/* code under test */
 #include "list.h"
 
 static int         g_stub_malloc_calls = 0;

@@ -4,7 +4,7 @@
 
 #include "unity.h"
 
-// code under test
+/* code under test */
 #include "list.h"
 
 static list_t g_list       = {0};

@@ -3,7 +3,7 @@
 
 #include "unity.h"
 
-// code under test
+/* code under test */
 #include "list.h"
 
 void setUp()
@@ -14,7 +14,12 @@ void tearDown()
 {
 }
 
-void testABC()
+void test_list_template()
 {
+    /* Locals */
+
+    /* Invoke function under test */
+
+    /* Assertions */
     TEST_ASSERT_EQUAL(1, 1);
 }

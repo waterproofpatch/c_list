@@ -3,7 +3,7 @@
 
 #include "unity.h"
 
-// code under test
+/* code under test */
 #include "list.h"
 
 void setUp()

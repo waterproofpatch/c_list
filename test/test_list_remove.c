@@ -4,7 +4,7 @@
 
 // mocks
 
-// code under test
+/* code under test */
 #include "list.h"
 
 // globals
