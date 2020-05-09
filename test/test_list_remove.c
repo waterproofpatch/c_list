@@ -1,13 +1,12 @@
 #include <stddef.h>
 #include <stdlib.h>
-#include "unity.h"
 
-// mocks
+#include "unity.h"
 
 /* code under test */
 #include "list.h"
 
-// globals
+/* test globals */
 static int   g_num_frees = 0;
 static void *g_expected  = NULL;
 
@@ -33,21 +32,17 @@ void stub_list_free(void *ptr)
  * */
 void test_list_remove_tail()
 {
-    list_node_t node_1 = {0};
-    list_node_t node_2 = {0};
-    list_t      list   = {0};
-
-    node_1.element = (void *)1;
-    node_1.next    = &node_2;
-    node_2.element = (void *)2;
-    node_2.next    = NULL;
-
-    list.head      = &node_1;
-    list.tail      = &node_2;
-    list.count     = 2;
-    list.list_free = stub_list_free;
+    /* Locals */
+    list_node_t node_2 = {.next = NULL, .element = (void *)2};
+    list_node_t node_1 = {.next = &node_2, .element = (void *)1};
+    list_t      list   = {.head      = &node_1,
+                   .tail      = &node_2,
+                   .count     = 2,
+                   .list_free = stub_list_free};
 
     g_expected = &node_2;
+
+    /* Invoke code under test */
     TEST_ASSERT_EQUAL(1, list_remove(&list, node_2.element));
     TEST_ASSERT_EQUAL(1, list.count);
     TEST_ASSERT_EQUAL(list.head, list.tail);
@@ -60,21 +55,17 @@ void test_list_remove_tail()
  * */
 void test_list_remove_head()
 {
-    list_node_t node_1 = {0};
-    list_node_t node_2 = {0};
-    list_t      list   = {0};
-
-    node_1.element = (void *)1;
-    node_1.next    = &node_2;
-    node_2.element = (void *)2;
-    node_2.next    = NULL;
-
-    list.head      = &node_1;
-    list.tail      = &node_2;
-    list.count     = 2;
-    list.list_free = stub_list_free;
+    /* Locals */
+    list_node_t node_2 = {.next = NULL, .element = (void *)2};
+    list_node_t node_1 = {.next = &node_2, .element = (void *)1};
+    list_t      list   = {.head      = &node_1,
+                   .tail      = &node_2,
+                   .count     = 2,
+                   .list_free = stub_list_free};
 
     g_expected = &node_1;
+
+    /* Invoke code under test */
     TEST_ASSERT_EQUAL(1, list_remove(&list, node_1.element));
     TEST_ASSERT_EQUAL(1, list.count);
     TEST_ASSERT_EQUAL(list.head, list.tail);
