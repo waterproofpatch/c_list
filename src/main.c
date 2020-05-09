@@ -29,7 +29,7 @@ typedef struct _element_t
  */
 static void item_processor(void *item, void *context)
 {
-    printf("got item: '%s', context '%s'\n", item, context);
+    printf("got item: '%p', context '%p'\n", item, context);
 }
 
 /**
