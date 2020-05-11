@@ -10,11 +10,13 @@
 
 list_t *list_init(void *(*list_malloc)(size_t), void (*list_free)(void *))
 {
+    /* Validate args */
     if (list_malloc == NULL || list_free == NULL)
     {
         return NULL;
     }
 
+    /* Create a new list structure and initialize its members */
     list_t *list = (list_t *)list_malloc(sizeof(list_t));
     if (list == NULL)
     {
@@ -29,11 +31,13 @@ list_t *list_init(void *(*list_malloc)(size_t), void (*list_free)(void *))
 
 void list_destroy(list_t *list)
 {
+    /* Validate args */
     if (list == NULL)
     {
         return;
     }
 
+    /* Release resources for each list_node_t */
     list_node_t *cur  = list->head;
     list_node_t *next = NULL;
     while (cur)
@@ -42,17 +46,19 @@ void list_destroy(list_t *list)
         list->list_free(cur);
         cur = next;
     }
-    /* must be last reference to 'list' */
+    /* .. and then finally for the list itself */
     list->list_free(list);
 }
 
 int list_add(list_t *list, void *element)
 {
+    /* Validate args */
     if (list == NULL || element == NULL)
     {
         return 0;
     }
 
+    /* Create a new entry to hold a reference to the data */
     list_node_t *new_node =
         (list_node_t *)list->list_malloc(sizeof(list_node_t));
     if (new_node == NULL)
@@ -62,7 +68,7 @@ int list_add(list_t *list, void *element)
     new_node->next    = NULL;
     new_node->element = element;
 
-    /* first element */
+    /* Case where new element is the first element */
     if (list->head == NULL)
     {
         list->head = new_node;
@@ -71,7 +77,7 @@ int list_add(list_t *list, void *element)
         return 1;
     }
 
-    /* append element */
+    /* Case where new element is not the first element */
     list->tail->next = new_node;
     list->tail       = new_node;
     list->count++;
@@ -80,6 +86,7 @@ int list_add(list_t *list, void *element)
 
 int list_remove(list_t *list, void *element)
 {
+    /* Validate args */
     if (list == NULL || element == NULL)
     {
         return 0;
@@ -88,17 +95,19 @@ int list_remove(list_t *list, void *element)
     list_node_t *cur  = list->head;
     list_node_t *prev = NULL;
 
+    /* Compare pointers until we find a matching entry */
     while (cur && cur->element != element)
     {
         prev = cur;
         cur  = cur->next;
     }
-    /* not found */
+
+    /* Not found */
     if (!cur)
     {
         return 0;
     }
-    /* if we're removing the tail, move the tail back */
+    /* If we're removing the tail, move the tail back */
     if (cur == list->tail)
     {
         list->tail = prev;
@@ -120,6 +129,7 @@ void list_foreach(list_t *list,
                   void (*process_func)(void *, void *),
                   void *context)
 {
+    /* Validate args */
     if (list == NULL || process_func == NULL)
     {
         return;
@@ -135,6 +145,7 @@ void list_foreach(list_t *list,
 
 void *list_get_at_index(list_t *list, unsigned int index)
 {
+    /* Validate args */
     if (list == NULL)
     {
         return NULL;
@@ -154,6 +165,7 @@ void *list_search(list_t *list,
                   char (*key_comparator)(void *, void *),
                   void *key)
 {
+    /* Validate args */
     if (list == NULL || key_comparator == NULL || key == NULL)
     {
         return NULL;
