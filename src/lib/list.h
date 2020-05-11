@@ -1,8 +1,9 @@
 /**
  *
  * @author waterproofpatch
+ * @file list.h
+ * @brief Public interface for the list implementation.
  *
- * Public interface for the linked list implementation.
  */
 #ifndef LIST_H
 #define LIST_H

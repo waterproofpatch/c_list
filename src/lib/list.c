@@ -1,7 +1,7 @@
 /**
  * @author waterproofpatch
- *
- * List implementation.
+ * @file list.c
+ * @brief List implementation.
  */
 #include <stdlib.h>
 
