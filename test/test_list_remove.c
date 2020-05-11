@@ -20,7 +20,7 @@ void tearDown()
 {
 }
 
-void stub_list_free(void *ptr)
+static void stub_list_free(void *ptr)
 {
     TEST_ASSERT_NOT_NULL(ptr);
     TEST_ASSERT_EQUAL(g_expected, ptr);

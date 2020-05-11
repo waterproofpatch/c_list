@@ -20,8 +20,9 @@ void tearDown()
  * @param elem element to process
  * @param context optional argument to process (should be NULL)
  */
-void stub_test_list_foreach_success_null_context_process_func(void *elem,
-                                                              void *context)
+static void stub_test_list_foreach_success_null_context_process_func(
+    void *elem,
+    void *context)
 {
     TEST_ASSERT_NOT_NULL(elem);
     TEST_ASSERT_EQUAL((void *)0xdeadbeef, elem);
@@ -49,8 +50,9 @@ void test_list_foreach_success_null_context()
  * @param elem element to process
  * @param context optional argument to process (should not be NULL)
  */
-void stub_test_list_foreach_success_non_null_context_process_func(void *elem,
-                                                                  void *context)
+static void stub_test_list_foreach_success_non_null_context_process_func(
+    void *elem,
+    void *context)
 {
     TEST_ASSERT_NOT_NULL(elem);
     TEST_ASSERT_NOT_NULL(context);

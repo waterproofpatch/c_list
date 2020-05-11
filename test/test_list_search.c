@@ -21,7 +21,8 @@ void tearDown()
  * @param key to use for comparison
  * @return char 1 to indicate we matched the item
  */
-char stub_test_list_search_success_key_comparator(void *element, void *key)
+static char stub_test_list_search_success_key_comparator(void *element,
+                                                         void *key)
 {
     TEST_ASSERT_EQUAL((void *)0xdeadbeef, element);
     TEST_ASSERT_EQUAL((void *)0xdeadbeef, key);
@@ -48,8 +49,9 @@ void test_list_search_success()
  * @param key the key used to compare
  * @return char 0 on first call, 1 on second call
  */
-char stub_test_list_search_success_two_elements_key_comparator(void *element,
-                                                               void *key)
+static char stub_test_list_search_success_two_elements_key_comparator(
+    void *element,
+    void *key)
 {
     static int num_calls = 0;
     if (num_calls == 0)
@@ -90,7 +92,8 @@ void test_list_search_two_elements_success()
  * @param key to use to compare
  * @return char 0 for not finding the element
  */
-char stub_test_list_search_not_found_key_comparator(void *element, void *key)
+static char stub_test_list_search_not_found_key_comparator(void *element,
+                                                           void *key)
 {
     static int num_calls            = 0;
     void *     expected_elements[2] = {(void *)0xdeadbeef, (void *)0xfeedface};

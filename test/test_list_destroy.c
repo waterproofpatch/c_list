@@ -23,7 +23,7 @@ void tearDown()
  *
  * @param ptr to element to free
  */
-void stub_free(void *ptr)
+static void stub_free(void *ptr)
 {
     TEST_ASSERT_NOT_NULL(ptr);
     g_num_frees++;

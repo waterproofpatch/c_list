@@ -26,7 +26,7 @@ void tearDown()
  * @param size of the list structure
  * @return void* newly created resource
  */
-void *stub_test_list_init_success_list_malloc(size_t size)
+static void *stub_test_list_init_success_list_malloc(size_t size)
 {
     TEST_ASSERT_EQUAL(sizeof(list_t), size);
     g_num_allocs++;
@@ -67,7 +67,7 @@ void test_list_init_fail_invalid_list_free()
     TEST_ASSERT_EQUAL(NULL, list);
 }
 
-void *stub_test_list_init_fail_no_mem_list_malloc(size_t size)
+static void *stub_test_list_init_fail_no_mem_list_malloc(size_t size)
 {
     TEST_ASSERT_EQUAL(sizeof(list_t), size);
     return NULL;

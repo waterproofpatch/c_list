@@ -20,7 +20,7 @@ void tearDown()
  * @param size size of the allocation to make
  * @return void* newly created resource
  */
-void *stub_test_list_add_success_list_malloc(size_t size)
+static void *stub_test_list_add_success_list_malloc(size_t size)
 {
     TEST_ASSERT_EQUAL(sizeof(list_node_t), size);
     static list_node_t ret = {.next = NULL, .element = NULL};
@@ -50,7 +50,7 @@ void test_list_add_success()
  * @param size size of the allocation to make
  * @return void* one of two potential allocations
  */
-void *stub_test_list_add_succeed_two_elements_list_malloc(size_t size)
+static void *stub_test_list_add_succeed_two_elements_list_malloc(size_t size)
 {
     TEST_ASSERT_EQUAL(sizeof(list_node_t), size);
     static int         num_calls = 0;
@@ -87,7 +87,7 @@ void test_list_add_success_two_elements()
  * @param size size of the allocation to make
  * @return void* NULL
  */
-void *stub_test_list_add_fail_no_mem(size_t size)
+static void *stub_test_list_add_fail_no_mem(size_t size)
 {
     TEST_ASSERT_EQUAL(sizeof(list_node_t), size);
     return NULL;
