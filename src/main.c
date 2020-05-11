@@ -36,10 +36,10 @@ static void item_processor(void *item, void *context)
 /**
  * @brief Create a new element object
  *
- * @param a some dummy value
- * @param b some dummy value
- * @param c some dummy value
- * @return element_t*
+ * @param a some dummy value.
+ * @param b some dummy value.
+ * @param c some dummy value.
+ * @return element_t* new element
  */
 static element_t *create_new_element(unsigned int   a,
                                      unsigned int   b,
@@ -58,10 +58,10 @@ static element_t *create_new_element(unsigned int   a,
 }
 
 /**
- * @brief print each element in the list
+ * @brief Print each element in the list.
  *
- * @param element data entry
- * @param context user-supplied context (argument(s))
+ * @param element user data entry.
+ * @param context user-supplied context (argument(s)).
  */
 static void print_list(void *element, void *context)
 {
@@ -78,10 +78,10 @@ static void print_list(void *element, void *context)
 }
 
 /**
- * @brief compare like-elements in this list.
+ * @brief Compare like-elements in this list.
  *
- * @param element
- * @param context user-supplied context (argument(s))
+ * @param element user data element.
+ * @param context user-supplied context (argument(s)).
  * @return char 1 if the two elements are equal, 0 otherwise
  */
 static char element_comparator(void *element, void *context)
@@ -105,9 +105,9 @@ static char element_comparator(void *element, void *context)
 /**
  * @brief Entry point.
  *
- * @param argc unused
- * @param argv unused
- * @return int
+ * @param argc unused.
+ * @param argv unused.
+ * @return 0 on success.
  */
 int main(int argc, char **argv)
 {
