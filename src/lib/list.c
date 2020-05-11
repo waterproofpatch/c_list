@@ -62,7 +62,7 @@ int list_add(list_t *list, void *element)
     new_node->next    = NULL;
     new_node->element = element;
 
-    // first element
+    /* first element */
     if (list->head == NULL)
     {
         list->head = new_node;
@@ -71,7 +71,7 @@ int list_add(list_t *list, void *element)
         return 1;
     }
 
-    // append element
+    /* append element */
     list->tail->next = new_node;
     list->tail       = new_node;
     list->count++;
@@ -93,12 +93,12 @@ int list_remove(list_t *list, void *element)
         prev = cur;
         cur  = cur->next;
     }
-    // not found
+    /* not found */
     if (!cur)
     {
         return 0;
     }
-    // if we're removing the tail, move the tail back
+    /* if we're removing the tail, move the tail back */
     if (cur == list->tail)
     {
         list->tail = prev;

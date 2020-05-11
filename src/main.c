@@ -111,27 +111,27 @@ static char element_comparator(void *element, void *context)
  */
 int main(int argc, char **argv)
 {
-    // item to add to list
+    /* item to add to list */
     char *mystring1 = (char *)malloc(strlen("this is my string1") + 1);
     char *mystring2 = (char *)malloc(strlen("this is my string2") + 1);
     strcpy(mystring1, "this is my string1");
     strcpy(mystring2, "this is my string2");
 
-    // create a list
+    /* create a list */
     list_t *list = list_init(malloc, free);
     assert(list != NULL);
 
-    // add our item
+    /* add our item */
     assert(list_add(list, mystring1));
     assert(list_add(list, mystring2));
 
-    // process each element
+    /* process each element */
     list_foreach(list, item_processor, "pass me");
 
-    // destroy the list
+    /* destroy the list */
     list_destroy(list);
 
-    // re-initialize the list
+    /* re-initialize the list */
     list = list_init(malloc, free);
     assert(list != NULL);
 
