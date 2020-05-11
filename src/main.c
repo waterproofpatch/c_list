@@ -70,7 +70,9 @@ static void print_list(void *element, void *context)
         return;
     }
     element_t *elem = (element_t *)element;
-    printf("elem->a: 0x%08x\nelem->b: %c\nelem->c: 0x%04x\n", elem->a, elem->b,
+    printf("elem->a: 0x%08x\nelem->b: %c\nelem->c: 0x%04x\n",
+           elem->a,
+           elem->b,
            elem->c);
 }
 
