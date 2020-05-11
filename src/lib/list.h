@@ -33,74 +33,76 @@ typedef struct _list_t
 } list_t;
 
 /**
- * @brief create a list object
- * @param list_malloc: the allocator to use for creating list nodes
- * @param list_free: the free function to use for desrtoying list nodes
- * @return a ptr to a list_t object
+ * @brief Create a new list.
+ * @param list_malloc The allocator to use for creating list nodes.
+ * @param list_free The free function to use for desrtoying list nodes.
+ * @return A ptr to a list_t object.
+ * @return NULL if no resources could be allocated.
  */
 list_t *list_init(void *(*list_malloc)(size_t), void (*list_free)(void *));
 
 /**
  * @brief Destroy a list.
- * @param list: the list to destroy
- * @return: void
+ * @param list The list to destroy.
  */
 void list_destroy(list_t *list);
 
 /**
- * @brief add an element to the list (shallow copy)
- * @param list: the list to add to
- * @param element: the element to add to the list
- * @return: 1 if adding element was successful, 0 otherwise
+ * @brief Add an element to the list (shallow copy).
+ * @param list The list to add to.
+ * @param element The element to add to the list.
+ * @return 1 if adding element was successful.
+ * @return 0 if adding element failed..
  */
 int list_add(list_t *list, void *element);
 
 /**
- * @brief removal based on linux torvold's linked list impl. Does NOT call
- * 'list_free' on elements. elements
- * @param list: the list from which removal should occur
- * @param element: the element to remove from the list
+ * @brief Remove an element from the list.
+ * @param list The list from which removal should occur.
+ * @param element The element to remove from the list.
+ * @return 1 if removal was successful.
+ * @return 0 if removal was unsuccessful.
  */
 int list_remove(list_t *list, void *element);
 
 /**
- * @brief invoke a function on each element in the list
- * @param list: the list to process
- * @param process_func: the function to invoke on each element of the list
- * @param context: an opaquie context object to pass to the list
- * @return: void
+ * @brief Invoke a user-supplied function on each element in the list.
+ * @param list The list to process.
+ * @param process_func The function to invoke on each element of the list.
+ * @param context An opaque context object to pass to the list.
  */
 void list_foreach(list_t *list,
                   void (*process_func)(void *, void *),
                   void *context);
 
 /**
- * @brief get an element at index
- * @param list: the list to search
- * @param index: the index into the list to get
- * @return ptr to element in list at index 'index', NULL if no data found at
- * index
+ * @brief Get an element at index.
+ * @param list The list to search.
+ * @param index The index into the list to get.
+ * @return Ptr to element in list at index 'index'.
+ * @return NULL if no entry exists at index.
  */
 void *list_get_at_index(list_t *list, unsigned int index);
 
 /**
- * @brief searches the supplied list for an element with a key matching a
+ * @brief Searches the supplied list for an element with a key matching a
  * supplied key. key_comparators should return 1 on a match, 0 otherwise. This
  * function returns the first element that caused key_comparator to return 1.
- * @param list: the list to search
- * @param key_comparator: the supplied comparator function
- * @param key: the key to pass along with the element to the key_comparator
- * function
- * @return: a ptr to the matching element if any found, NULL otherwise
+ * @param list The list to search.
+ * @param key_comparator The supplied comparator function.
+ * @param key The key to pass along with the element to the key_comparator
+ * function.
+ * @return A ptr to the matching element if any found.
+ * @return NULL if key_comparator does not return '1' at all.
  */
 void *list_search(list_t *list,
                   char (*key_comparator)(void *, void *),
                   void *key);
 
 /**
- * @brief get the count of the list
- * @param list: the list to get the count of
- * @return: number of entries in the list
+ * @brief Get the count of the list.
+ * @param list The list to get the count of.
+ * @return Number of entries in the list.
  */
 size_t list_count(list_t *list);
 

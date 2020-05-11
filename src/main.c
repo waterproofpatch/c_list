@@ -12,21 +12,20 @@
 #include "list.h"
 
 /**
- * @brief Some example struct
+ * @brief Some example struct.
  *
  */
 typedef struct _element_t
 {
-    unsigned int   a; /** dummy entry */
-    unsigned char  b; /** dummy entry */
-    unsigned short c; /** dummy entry */
+    unsigned int   a; /**< dummy entry */
+    unsigned char  b; /**< dummy entry */
+    unsigned short c; /**< dummy entry */
 } element_t;
 
 /**
- * @brief some generic processing routine
- *
- * @param item to process
- * @param context user supplied argument
+ * @brief Some generic processing routine.
+ * @param item to process.
+ * @param context user supplied argument.
  */
 static void item_processor(void *item, void *context)
 {
@@ -34,12 +33,12 @@ static void item_processor(void *item, void *context)
 }
 
 /**
- * @brief Create a new element object
- *
+ * @brief Create a new element object.
  * @param a some dummy value.
  * @param b some dummy value.
  * @param c some dummy value.
- * @return element_t* new element
+ * @return element_t* new element.
+ * @return NULL if no resource could be allocated.
  */
 static element_t *create_new_element(unsigned int   a,
                                      unsigned int   b,
@@ -59,7 +58,6 @@ static element_t *create_new_element(unsigned int   a,
 
 /**
  * @brief Print each element in the list.
- *
  * @param element user data entry.
  * @param context user-supplied context (argument(s)).
  */
@@ -79,10 +77,10 @@ static void print_list(void *element, void *context)
 
 /**
  * @brief Compare like-elements in this list.
- *
  * @param element user data element.
  * @param context user-supplied context (argument(s)).
- * @return char 1 if the two elements are equal, 0 otherwise
+ * @return 1 if the two elements are equal.
+ * @return 0 if the two elements are not equal.
  */
 static char element_comparator(void *element, void *context)
 {
