@@ -49,7 +49,7 @@ list_t *list_init(void *(*list_malloc)(size_t), void (*list_free)(void *));
 void list_destroy(list_t *list);
 
 /**
- * @brief Add an element to the list (shallow copy).
+ * @brief Add an element to the list.
  * @param list The list to add to.
  * @param element The element to add to the list.
  * @return 1 if adding element was successful.
