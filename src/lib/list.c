@@ -139,6 +139,8 @@ void list_foreach(list_t *list,
         return;
     }
 
+    /* Starting with the head, move through each element
+     * in the list invoking the process func on it */
     list_node_t *cur = list->head;
     while (cur)
     {
@@ -155,6 +157,8 @@ void *list_get_at_index(list_t *list, unsigned int index)
         return NULL;
     }
 
+    /* Move through the list until the requested index is found or we are out of
+     * elements */
     unsigned int i   = 0;
     list_node_t *cur = list->head;
     while (cur && i++ < index)
@@ -175,6 +179,9 @@ void *list_search(list_t *list,
         return NULL;
     }
 
+    /* Starting with the head, move through each element in the list
+     * and invoke the key_comparator on it with the supplied key
+     * until we have a match or we exhaust the list. */
     list_node_t *cur = list->head;
     while (cur)
     {
