@@ -102,7 +102,6 @@ static char element_comparator(void *element, void *context)
 
 /**
  * @brief Entry point.
- *
  * @param argc unused.
  * @param argv unused.
  * @return 0 on success.
