@@ -1,6 +1,8 @@
 /**
- *  @author waterproofpatch
- *  @brief Public interface for the linked list implementation.
+ *
+ * @author waterproofpatch
+ *
+ * Public interface for the linked list implementation.
  */
 #ifndef LIST_H
 #define LIST_H
@@ -8,13 +10,12 @@
 #include <stddef.h>
 
 /**
- * @brief A data entry within the list.
- *
+ * @brief A single data entry within the list.
  */
 typedef struct _list_node_t
 {
-    struct _list_node_t *next; /** pointer to next element in the list */
-    void *element; /** pointer to the value element, allocated by user */
+    struct _list_node_t *next; /**< pointer to next element in the list */
+    void *element; /**< pointer to the value element, allocated by user */
 } list_node_t;
 
 /**
@@ -24,11 +25,11 @@ typedef struct _list_node_t
  */
 typedef struct _list_t
 {
-    list_node_t *head;
-    list_node_t *tail;
-    void *(*list_malloc)(size_t);
-    void (*list_free)(void *);
-    size_t count;
+    list_node_t *head;            /**< front of the list */
+    list_node_t *tail;            /**< back of the list */
+    void *(*list_malloc)(size_t); /**< routine for creating new resources */
+    void (*list_free)(void *);    /**< routine for releasing resources */
+    size_t count;                 /**< number of elements in the list */
 } list_t;
 
 /**
@@ -40,8 +41,7 @@ typedef struct _list_t
 list_t *list_init(void *(*list_malloc)(size_t), void (*list_free)(void *));
 
 /**
- * @brief destroy a list. Also calls 'list_free' on all elements added via
- * 'list_add'.
+ * @brief Destroy a list.
  * @param list: the list to destroy
  * @return: void
  */

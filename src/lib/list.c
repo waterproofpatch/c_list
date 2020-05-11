@@ -1,10 +1,11 @@
 /**
  * @author waterproofpatch
- * @brief Implementation for the list
+ *
+ * List implementation.
  */
 #include <stdlib.h>
 
-/* This file */
+/* Foreard declarations for this file */
 #include "list.h"
 
 list_t *list_init(void *(*list_malloc)(size_t), void (*list_free)(void *))

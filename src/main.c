@@ -1,6 +1,7 @@
 /**
  * @author waterproofpatch
- * @brief Test driver
+ *
+ * Test driver
  */
 #include <stdio.h>
 #include <stdlib.h>
