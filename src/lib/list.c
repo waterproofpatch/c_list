@@ -107,15 +107,19 @@ int list_remove(list_t *list, void *element)
     {
         return 0;
     }
+
     /* If we're removing the tail, move the tail back */
     if (cur == list->tail)
     {
         list->tail = prev;
     }
+
+    /* Skip entry about to be removed */
     if (prev)
     {
         prev->next = cur->next;
     }
+    /* Case where head is removed */
     else
     {
         list->head = cur->next;
