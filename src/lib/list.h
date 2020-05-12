@@ -1,5 +1,4 @@
 /**
- *
  * @author waterproofpatch
  * @file list.h
  * @brief Public interface for the list implementation.
