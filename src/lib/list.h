@@ -53,7 +53,7 @@ void list_destroy(list_t *list);
  * @param list The list to add to.
  * @param element The element to add to the list.
  * @return 1 if adding element was successful.
- * @return 0 if adding element failed..
+ * @return 0 if adding element failed.
  */
 int list_add(list_t *list, void *element);
 
